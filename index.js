@@ -2,6 +2,10 @@ const express = require('express');
 const path = require("path");
 const expressHandlebars = require('express-handlebars');
 
+const homeRoutes = require('./routes/home');
+const coursesRoutes = require('./routes/courses');
+const addRoutes = require('./routes/add');
+
 const app = express();
 
 const handlebars = expressHandlebars.create({
@@ -14,14 +18,10 @@ app.set('view engine', 'hbs');
 app.set('views', 'views');
 
 app.use(express.static('public'))
+app.use('/', homeRoutes);
+app.use('/course/list', coursesRoutes);
+app.use('/course/add', addRoutes);
 
-app.get('/', (req, res) => {
-    res.render('index');
-})
-
-app.get('/about', (req, res) => {
-    res.render('about');
-})
 
 const PORT = process.env.PORT || 3000;
 
